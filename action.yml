@@ -20,7 +20,7 @@ runs:
     - name: Checkout project
       uses: actions/checkout@v2
       with:
-        persist-credentials: false
+        persist-credentials: true
         fetch-depth: 0
     - name: Set up node
       uses: actions/setup-node@v2.1.5
