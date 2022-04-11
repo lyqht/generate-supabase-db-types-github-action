@@ -7,7 +7,6 @@ This GitHub action workflow aims to help you to create Supabase database definit
 This workflow is a composite action:
 
 - To generate database types based on the Swagger OpenAPI specification of your Supabase project REST data endpoint, [openapi-typescript](https://github.com/drwpow/openapi-typescript) is used.
-- Checking for file changes is done using the [get-diff-action](https://github.com/technote-space/get-diff-action).
 - Commit and push github actions to your repo are performed by the [git-auto-commit action](https://github.com/stefanzweifel/git-auto-commit-action).
 
 ## How to use
