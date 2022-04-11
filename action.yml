@@ -39,8 +39,8 @@ runs:
         file_pattern: ${{ inputs.OUTPUT_PATH }}
         commit_message: Update database types
         commit_user_name: Supabot
-        commit_user_email: supabot+github-actions[bot]@users.noreply.github.com
-        commit_author: Supabot <supabot+github-actions[bot]@users.noreply.github.com>
+        commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
+        commit_author: Supabot <41898282+github-actions[bot]@users.noreply.github.com>
 
 branding:
   icon: 'activity'
