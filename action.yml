@@ -1,0 +1,52 @@
+name: 'Generate Supabase Database types'
+author: 'Estee Tey'
+description: 'Automatically updates your type definitions to match your table schemas'
+
+inputs:
+  SUPABASE_ANON_KEY:
+    description: "Anonymous API key of your Supabase project"
+    required: true
+  SUPABASE_URL:
+    description: "Endpoint of your Supabase project"
+    required: true
+  OUTPUT_PATH:
+    description: "Path where you want the definitions file to be saved. Any changes will be committed and override existing definition files. Default value is 'src/types/supabase.ts'"
+    required: false
+    default: "src/types/supabase.ts"
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout project
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+        fetch-depth: 0
+    - name: Set up node
+      uses: actions/setup-node@v2.1.5
+    - name: "Retrieve OpenAPI specifications of Supabase project"
+      shell: bash
+      env:
+        SUPABASE_URL: ${{ inputs.SUPABASE_URL }}
+        SUPABASE_ANON_KEY: ${{ inputs.SUPABASE_ANON_KEY }}
+        OUTPUT_PATH: ${{ inputs.OUTPUT_PATH }}
+      run: |
+        npx openapi-typescript ${SUPABASE_URL}/rest/v1/?apikey=${SUPABASE_ANON_KEY} --version=2 --output ${OUTPUT_PATH}
+        echo "$(cat src/types/supabase.ts)"
+    - name: Check for File Changes
+      uses: technote-space/get-diff-action@v4.0.1
+      with:
+        FILES: |
+          src/types/supabase.ts
+    - name: Commit files
+      if: env.GIT_DIFF
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Update database types
+        commit_user_name: Supabot
+        commit_user_email: supabot+github-actions[bot]@users.noreply.github.com
+        commit_author: Supabot <supabot+github-actions[bot]@users.noreply.github.com>
+
+branding:
+  icon: 'activity'
+  color: 'blue'
