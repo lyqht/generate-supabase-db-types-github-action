@@ -38,7 +38,7 @@ jobs:
 ### If you don't have an existing GitHub Action workflow for your repository
 
 1. Create a folder `.github/workflows` if you don't have it already 
-2. Inside that folder, create a YAML file say `article-badge.yml`
-3. In the `article-badge.yml` file, you can copy the example above and modify it to your usage.
+2. Inside that folder, create a YAML file say `update-types.yml`
+3. In the `update-types.yml` file, you can copy the example above and modify it to your usage.
 4. You can choose to declare the `schedule` with a cron expression to run the job at a specified frequency e.g. every day once.
 
