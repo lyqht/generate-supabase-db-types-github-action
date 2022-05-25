@@ -42,3 +42,6 @@ jobs:
 3. In the `update-types.yml` file, you can copy the example above and modify it to your usage.
 4. You can choose to declare the `schedule` with a cron expression to run the job at a specified frequency e.g. every day once.
 
+---
+
+> Note that if your Supabase project is paused or deleted, this bot will only result in failed jobs.
