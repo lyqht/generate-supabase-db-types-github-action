@@ -9,6 +9,7 @@ This workflow is a composite action:
 
 - To generate database types based on the Swagger OpenAPI specification of your Supabase project REST data endpoint, [openapi-typescript](https://github.com/drwpow/openapi-typescript) is used.
 - Commit and push github actions to your repo are performed by the [git-auto-commit action](https://github.com/stefanzweifel/git-auto-commit-action).
+- Creating the pull request is performed by [pull-request action](https://github.com/repo-sync/pull-request).
 
 ## How to use
 
