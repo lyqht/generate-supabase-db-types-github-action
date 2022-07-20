@@ -68,11 +68,11 @@ jobs:
 
 Then at GitHub > Developer Settings, you have to create a personal access token with the scope of `workflow`.
 
-![](./screenshots/personal-access-token-screenshot.png)
+![Preview of Personal Access Token creation screen with workflow scope turned on](./screenshots/personal-access-token-screenshot.png)
 
 With this access token, you can create an event trigger at Supabase.
 
-![](./screenshots/event-trigger-sql-in-supabase.png)
+![Preview of Supabase SQL Editor with code block below](./screenshots/event-trigger-sql-in-supabase.png)
 
 [Event trigger script credit to @thorwebdev](https://github.com/lyqht/generate-supabase-db-types-github-action/issues/1), modified by [@lyqht](https://github.com/lyqht) to be workflow dispatch instead of repository dispatch.
 
@@ -95,3 +95,7 @@ CREATE EVENT TRIGGER dispatch_github_action ON ddl_command_end
       WHEN TAG IN ('ALTER TABLE') 
       EXECUTE FUNCTION public.dispatch_github_action();
 ```
+
+Then you also need to turn on the Postgres extension for net.
+
+![Preview of Supabase Extensions Dashboard with PG_NET toggled on](screenshots/enable-net-extension.png)
