@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: lyqht/generate-supabase-database-types@main
+      - uses: lyqht/generate-supabase-db-types-github-action@main
         with:
             SUPABASE_URL: ${{secrets.SUPABASE_URL }} # e.g. https://interestingproject.supabase.co
             SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
