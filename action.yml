@@ -26,14 +26,15 @@ runs:
       uses: supabase/setup-cli@v1
       with:
         version: 1.4.6
-      run: supabase init
     - name: "Generate database typescript types"
       shell: bash
       env:
         SUPABASE_REF_ID: ${{ inputs.SUPABASE_REF_ID }}
         DB_PASSWORD: ${{ inputs.DB_PASSWORD }}
         OUTPUT_PATH: ${{ inputs.OUTPUT_PATH }}
-      run: supabase gen types typescript --db-url 'postgresql://postgres:${DB_PASSWORD}@db.${SUPABASE_REF_ID}.supabase.co:5432/postgres' > ${OUTPUT_PATH}
+      run: |
+        supabase init
+        supabase gen types typescript --db-url 'postgresql://postgres:${DB_PASSWORD}@db.${SUPABASE_REF_ID}.supabase.co:5432/postgres' > ${OUTPUT_PATH}
     - name: Check for file changes & commit files
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
