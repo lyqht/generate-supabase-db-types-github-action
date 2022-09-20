@@ -6,6 +6,9 @@ inputs:
   SUPABASE_REF_ID:
     description: "Reference id of your Supabase project"
     required: true
+  SUPABASE_ACCESS_TOKEN:
+    description: "Access token https://app.supabase.com/account/tokens"
+    required: true
   DB_PASSWORD:
     description: "Database password"
     required: true
@@ -30,6 +33,7 @@ runs:
       shell: bash
       env:
         SUPABASE_REF_ID: ${{ inputs.SUPABASE_REF_ID }}
+        SUPABASE_ACCESS_TOKEN: ${{ inputs.SUPABASE_ACCESS_TOKEN }}
         DB_PASSWORD: ${{ inputs.DB_PASSWORD }}
         OUTPUT_PATH: ${{ inputs.OUTPUT_PATH }}
       run: |
