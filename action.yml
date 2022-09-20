@@ -22,10 +22,13 @@ runs:
       with:
         persist-credentials: true
         fetch-depth: 0
-    - name: Set up supabase cli and generate db ts types
+    - name: Set up supabase cli
       uses: supabase/setup-cli@v1
       with:
         version: 1.4.6
+      run: supabase init
+    - name: "Generate database typescript types"
+      shell: bash
       env:
         SUPABASE_REF_ID: ${{ inputs.SUPABASE_REF_ID }}
         DB_PASSWORD: ${{ inputs.DB_PASSWORD }}
