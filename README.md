@@ -23,17 +23,25 @@ on:
   schedule:
     - cron: '*/60 * * * *'
   workflow_dispatch:
+#  For autogen on db update
+#  push:
+#    branches: [ main ]
+#    paths:
+#      - '*.sql'
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+runs-on: ubuntu-latest
+#    For autogen on db update
+#    if: github.head_ref != 'supabot**'
 
     steps:
       - uses: lyqht/generate-supabase-db-types-github-action@main
         with:
-            SUPABASE_URL: ${{secrets.SUPABASE_URL }} # e.g. https://interestingproject.supabase.co
-            SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-            OUTPUT_PATH: src/types/supabase.ts
+            SUPABASE_REF_ID: ${{ secrets.SUPABASE_REF_ID }} # e.g. https://interestingproject.supabase.co
+            SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+            DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+            OUTPUT_PATH: db.types.ts
 ```
 
 ### If you don't have an existing GitHub Action workflow for your repository
