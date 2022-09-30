@@ -38,7 +38,7 @@ runs:
         OUTPUT_PATH: ${{ inputs.OUTPUT_PATH }}
       run: |
         supabase link --project-ref ${SUPABASE_REF_ID} --password ${DB_PASSWORD}
-        supabase gen types typescript --db-url 'postgresql://postgres:${DB_PASSWORD}@db.${SUPABASE_REF_ID}.supabase.co:5432/postgres' > ${OUTPUT_PATH}
+        supabase gen types typescript --db-url "postgresql://postgres:${DB_PASSWORD}@db.${SUPABASE_REF_ID}.supabase.co:6543/postgres" > ${OUTPUT_PATH}
     - name: Check for file changes & commit files
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
