@@ -13,9 +13,17 @@ This workflow is a composite action:
 
 ## How to use
 
-If you are new to GitHub Actions, refer to [this section](#if-you-dont-have-an-existing-github-action-workflow-for-your-repository). Otherwise, you can get started by referring to to the example given and the input options available.
+<details><summary>If you don't have an existing GitHub Action workflow for your repository</summary>
 
-### Example
+1. Create a folder `.github/workflows` if you don't have it already 
+2. Inside that folder, create a YAML file say `update-types.yml`
+3. In the `update-types.yml` file, you can copy the example above and modify it to your usage.
+4. You can choose to declare the `schedule` with a cron expression to run the job at a specified frequency e.g. every day once.
+</details>
+
+Otherwise, you can get started by referring to to the example given and the input options available.
+
+### Simple Example
 
 ```yml
 name: Update database types
@@ -23,34 +31,44 @@ on:
   schedule:
     - cron: '*/60 * * * *'
   workflow_dispatch:
-#  For autogen on db update
-#  push:
-#    branches: [ main ]
-#    paths:
-#      - '*.sql'
 
 jobs:
   build:
-runs-on: ubuntu-latest
-#    For autogen on db update
-#    if: github.head_ref != 'supabot**'
-
+    runs-on: ubuntu-latest
     steps:
       - uses: lyqht/generate-supabase-db-types-github-action@main
         with:
-            SUPABASE_REF_ID: ${{ secrets.SUPABASE_REF_ID }} # e.g. https://interestingproject.supabase.co
+          SUPABASE_REF_ID: ${{ secrets.SUPABASE_REF_ID }}
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          OUTPUT_PATH: db.types.ts
+```
+
+### For autogeneration of types
+
+```yml
+name: Update database types
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '*.sql'
+
+jobs:
+  build:
+    if: github.head_ref != 'supabot**'
+    runs-on: ubuntu-latest
+      steps:
+        - uses: lyqht/generate-supabase-db-types-github-action@main
+          with:
+            SUPABASE_REF_ID: ${{ secrets.SUPABASE_REF_ID }}
             SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
             DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
             OUTPUT_PATH: db.types.ts
 ```
 
-### If you don't have an existing GitHub Action workflow for your repository
-
-1. Create a folder `.github/workflows` if you don't have it already 
-2. Inside that folder, create a YAML file say `update-types.yml`
-3. In the `update-types.yml` file, you can copy the example above and modify it to your usage.
-4. You can choose to declare the `schedule` with a cron expression to run the job at a specified frequency e.g. every day once.
-
 ---
+
+## Cavaets
 
 > Note that if your Supabase project is paused or deleted, this bot will only result in failed jobs.
