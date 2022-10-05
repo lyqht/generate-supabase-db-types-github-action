@@ -52,7 +52,9 @@ jobs:
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         OUTPUT_PATH: db.types.ts
 ```
-### For autogeneration of types
+### Example based on migration scripts
+
+If your DB schema is kept up to date based on the migration SQL scripts within your project itself, you can configure the workflow to run based on any new SQL files pushed to your branch.
 
 ```yml
 name: Update database types
