@@ -36,12 +36,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: lyqht/generate-supabase-db-types-github-action@main
-        with:
-          SUPABASE_REF_ID: ${{ secrets.SUPABASE_REF_ID }}
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          OUTPUT_PATH: db.types.ts
+    - uses: lyqht/generate-supabase-db-types-github-action@main
+      with:
+        SUPABASE_REF_ID: ${{ secrets.SUPABASE_REF_ID }}
+        SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        OUTPUT_PATH: db.types.ts
 ```
 
 ### For autogeneration of types
@@ -56,15 +56,15 @@ on:
 
 jobs:
   build:
-    if: github.head_ref != 'supabot**'
     runs-on: ubuntu-latest
-      steps:
-        - uses: lyqht/generate-supabase-db-types-github-action@main
-          with:
-            SUPABASE_REF_ID: ${{ secrets.SUPABASE_REF_ID }}
-            SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-            DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-            OUTPUT_PATH: db.types.ts
+    if: github.head_ref != 'supabot**'
+    steps:
+    - uses: lyqht/generate-supabase-db-types-github-action@main
+      with:
+        SUPABASE_REF_ID: ${{ secrets.SUPABASE_REF_ID }}
+        SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        OUTPUT_PATH: db.types.ts
 ```
 
 ## Migrating from `v0.1.0` to `v0.2.0`
