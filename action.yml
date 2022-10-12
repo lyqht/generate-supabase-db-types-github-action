@@ -3,11 +3,14 @@ author: 'Estee Tey'
 description: 'Automatically updates your type definitions to match your table schemas'
 
 inputs:
-  SUPABASE_ANON_KEY:
-    description: "Anonymous API key of your Supabase project"
+  SUPABASE_REF_ID:
+    description: "Reference id of your Supabase project"
     required: true
-  SUPABASE_URL:
-    description: "Endpoint of your Supabase project"
+  SUPABASE_ACCESS_TOKEN:
+    description: "Access token https://app.supabase.com/account/tokens"
+    required: true
+  DB_PASSWORD:
+    description: "Database password"
     required: true
   OUTPUT_PATH:
     description: "Path where you want the definitions file to be saved. Any changes will be committed and override existing definition files. Default value is 'src/types/supabase.ts'"
@@ -18,21 +21,27 @@ runs:
   using: composite
   steps:
     - name: Checkout project
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         persist-credentials: true
         fetch-depth: 0
-    - name: Set up node
-      uses: actions/setup-node@v2.1.5
-    - name: "Retrieve OpenAPI specifications of Supabase project"
+    - name: Set up supabase cli
+      uses: supabase/setup-cli@v1.0.2
+      with:
+        version: 1.5.3
+    - name: "Generate database typescript types"
       shell: bash
       env:
-        SUPABASE_URL: ${{ inputs.SUPABASE_URL }}
-        SUPABASE_ANON_KEY: ${{ inputs.SUPABASE_ANON_KEY }}
+        SUPABASE_REF_ID: ${{ inputs.SUPABASE_REF_ID }}
+        SUPABASE_ACCESS_TOKEN: ${{ inputs.SUPABASE_ACCESS_TOKEN }}
+        DB_PASSWORD: ${{ inputs.DB_PASSWORD }}
         OUTPUT_PATH: ${{ inputs.OUTPUT_PATH }}
       run: |
-        npx openapi-typescript ${SUPABASE_URL}/rest/v1/?apikey=${SUPABASE_ANON_KEY} --version=2 --output ${OUTPUT_PATH}
-        echo "$(cat src/types/supabase.ts)"
+        if [ ! -f supabase/config.toml ]; then
+          supabase init && supabase start
+        fi
+        supabase link --project-ref ${SUPABASE_REF_ID} --password ${DB_PASSWORD}
+        supabase gen types typescript --db-url "postgresql://postgres:${DB_PASSWORD}@db.${SUPABASE_REF_ID}.supabase.co:6543/postgres" > ${OUTPUT_PATH}
     - name: Check for file changes & commit files
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
