@@ -37,7 +37,9 @@ runs:
         DB_PASSWORD: ${{ inputs.DB_PASSWORD }}
         OUTPUT_PATH: ${{ inputs.OUTPUT_PATH }}
       run: |
-        supabase init && supabase start
+        if [ ! -f supabase/config.toml ]; then
+          supabase init && supabase start
+        fi
         supabase link --project-ref ${SUPABASE_REF_ID} --password ${DB_PASSWORD}
         supabase gen types typescript --db-url "postgresql://postgres:${DB_PASSWORD}@db.${SUPABASE_REF_ID}.supabase.co:6543/postgres" > ${OUTPUT_PATH}
     - name: Check for file changes & commit files
