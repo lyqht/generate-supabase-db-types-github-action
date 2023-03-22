@@ -26,9 +26,9 @@ runs:
         persist-credentials: true
         fetch-depth: 0
     - name: Set up supabase cli
-      uses: supabase/setup-cli@v1.0.2
+      uses: supabase/setup-cli@v1
       with:
-        version: 1.5.3
+        version: latest
     - name: "Generate database typescript types"
       shell: bash
       env:
