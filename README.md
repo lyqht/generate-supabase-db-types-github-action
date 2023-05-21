@@ -16,7 +16,7 @@ This workflow is a composite action:
 
 1. Create a folder `.github/workflows` if you don't have it already 
 2. Inside that folder, create a YAML file say `update-types.yml`
-3. In the `update-types.yml` file, you can copy the example above and modify it to your usage.
+3. In the `update-types.yml` file, you can copy the example below and modify it to your usage.
 4. You can choose to declare the `schedule` with a cron expression to run the job at a specified frequency e.g. every day once.
 </details>
 
